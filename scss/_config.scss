@@ -1,0 +1,68 @@
+$primary-color: #444;
+$secondary-color: #eece1a;
+$show-home-image: true;
+$home-image: url(../img/background.jpg);
+$background-opacity: 0.9;
+
+@mixin easeOut {
+  // This is like a function
+  transition: all 0.5s ease-out;
+}
+
+@mixin background {
+  @if $show-home-image {
+    // If img is true
+    &#bg-img {
+      background: $home-image; // Then background of body will be set to the $home-image
+      background-attachment: fixed;
+      background-size: cover; // Cover entire space
+
+      &:after {
+        // Psuedo element so dont need overlay class
+        content: ''; // Needed  after :after or :before
+        position: absolute; // To cover whole body
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; // Text moves upfront
+        background: rgba($primary-color, $background-opacity);
+      }
+    }
+  }
+}
+
+// Set Text Color
+@function set-text-color($color) {
+  @if (lightness($color) > 40) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}
+
+// Media Query Mixins - Responsiveness
+
+@mixin mediaSm {
+  @media screen and (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin mediaMd {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mediaLg {
+  @media screen and (min-width: 769px) and (max-width: 1170px) {
+    @content;
+  }
+}
+
+@mixin mediaXL {
+  @media screen and (min-width: 1171px) {
+    @content;
+  }
+}
